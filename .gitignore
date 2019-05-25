@@ -105,3 +105,4 @@ venv.bak/
 
 model_trained_*
 numerai_dataset.zip
+tmp/

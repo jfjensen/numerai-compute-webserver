@@ -2,7 +2,9 @@ import numerox as nx
 import numerapi
 import os
 import model
+import data as dt
 
+predictions_dir_path = 'tmp/'
 
 def predict_and_submit():
     # Numerai API key
@@ -14,8 +16,8 @@ def predict_and_submit():
     tournaments = nx.tournament_names()
     print(tournaments)
 
-    # download dataset from numerai
-    data = nx.download('numerai_dataset.zip')
+    # get the dataset
+    data = dt.get_data()
 
     for tournament_name in tournaments:
         saved_model_name = 'model_trained_' + tournament_name
@@ -34,12 +36,12 @@ def predict_and_submit():
         prediction = nx.production(m, data, tournament=tournament_name)
 
         # save predictions to csv file
-        prediction_filename = '/tmp/prediction_' + tournament_name + '.csv'
+        prediction_filename = predictions_dir_path + 'prediction_' + tournament_name + '.csv'
         prediction.to_csv(prediction_filename, verbose=True)
 
     # submit the prediction
     for tournament_name in tournaments:
-        prediction_filename = '/tmp/prediction_' + tournament_name + '.csv'
+        prediction_filename = predictions_dir_path +'prediction_' + tournament_name + '.csv'
 
         submission_id = nx.upload(
             prediction_filename, tournament_name, public_id, secret_key, block=False)

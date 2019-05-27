@@ -43,6 +43,7 @@ def predict_and_submit():
 
     # submit the prediction
     for tournament_name in tournaments:
+        print("submitting predictions for {}".format(tournament_name))
         prediction_filename = predictions_dir_path +'prediction_' + tournament_name + '.csv'
 
         # submission_id = nx.upload(

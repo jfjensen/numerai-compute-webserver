@@ -3,8 +3,9 @@ import numerapi
 import os
 import model
 import data as dt
+import status as stat
 
-
+@stat.running
 def train():
 
     tournaments = nx.tournament_names()

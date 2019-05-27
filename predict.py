@@ -3,15 +3,17 @@ import numerapi
 import os
 import model
 import data as dt
+import status as stat
 
 predictions_dir_path = 'tmp/'
 
+@stat.running
 def predict_and_submit():
     # Numerai API key
     # You will need to create an API key by going to https://numer.ai/account and clicking "Add" under the "Your API keys" section.
     # Select the following permissions for the key: "Upload submissions", "Make stakes", "View historical submission info", "View user info"
-    public_id = os.environ["NUMERAI_PUBLIC_ID"]
-    secret_key = os.environ["NUMERAI_SECRET_KEY"]
+    # public_id = os.environ["NUMERAI_PUBLIC_ID"]
+    # secret_key = os.environ["NUMERAI_SECRET_KEY"]
 
     tournaments = nx.tournament_names()
     print(tournaments)
@@ -43,8 +45,8 @@ def predict_and_submit():
     for tournament_name in tournaments:
         prediction_filename = predictions_dir_path +'prediction_' + tournament_name + '.csv'
 
-        submission_id = nx.upload(
-            prediction_filename, tournament_name, public_id, secret_key, block=False)
+        # submission_id = nx.upload(
+        #     prediction_filename, tournament_name, public_id, secret_key, block=False)
 
     # staking variables
     # confidence = .501 # increase this number to signify your confidence in a minimum AUC. Can't go below .501

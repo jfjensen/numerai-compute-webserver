@@ -1,5 +1,6 @@
 import predict
 import train as t
+import status as stat
 
 from flask import Flask, jsonify
 app = Flask(__name__)
@@ -10,16 +11,17 @@ def index():
     return jsonify({"status": "ok"})
 
 @app.route('/submit')
+@stat.check_status
 def submit():
     predict.predict_and_submit()
-    return jsonify({"status": "ok"})
-
 
 @app.route('/train')
+@stat.check_status
 def train():
     t.train()
-    return jsonify({"status": "ok"})
-
+        
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug = True, threaded=False, processes=1)
+    stat.set_ready()
+    # app.run(host='0.0.0.0', debug = True) #, threaded=False, processes=1)
+    app.run(host='0.0.0.0', debug = True, threaded=True, processes=1)
